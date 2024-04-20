@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Record extends Model
 {
+    use HasFactory;
     // Recordが持つFilmのリレーション
     public function films()
     {

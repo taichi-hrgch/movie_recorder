@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('genre');
             $table->integer('evaluation');
             $table->date('date_watched');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->text('comment')->nullable();;
             $table->string('image')->nullable();
             $table->timestamps(); // Adds 'created_at' and 'updated_at' columns
