@@ -13,4 +13,21 @@ class Record extends Model
     {
         return $this->belongsToMany(Film::class);
     }
+    
+    protected $fillable = [
+        'title',
+        'release_date',
+        'genre',
+        'poster_path',
+        'recommendations',
+        'cast',
+        // その他の属性...
+    ];
+
+    // JSON形式で保存される属性については、$castsで指定
+    protected $casts = [
+        'recommendations' => 'array',
+        'cast' => 'array',
+        // その他の属性...
+    ];
 }

@@ -8,22 +8,46 @@
         <!-- Styles -->
         <style>
             body { font-family: 'Nunito', sans-serif; }
+            .movie { margin-bottom: 20px; }
+            .poster { width: 100px; }
+            .title { font-size: 20px; }
+            .create-record-button {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                padding: 10px;
+                background-color: #007bff;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+            }
+            header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 20px;
+            }
+            .header-title {
+                margin: 0;
+            }
         </style>
-        </head>
+    </head>
     <body>
-    <h1>映画の本棚</h1>
+        <header>
+            <h1 class="header-title">映画の本棚</h1>
+            <a href="{{ route('records.create') }}" class="create-record-button">記録を追加</a>
+        </header>
         @forelse ($records as $record)
             <div class="record">
-                <h2 class="title">
-                    <a href="/records/{{ $record->id }}">{{ $record->title }}</a>
-                </h2>
-                <p class="body">{{ $record->body }}</p>
-                <p>評価: {{ $record->evaluation }}</p>
-                <p>視聴日: {{ date('Y-m-d' ,strtotime($record->date_watched)) }}</p>
+                <a href="{{ route('records.show', $record) }}">
+                    <h2 class="title">
+                        {{ $record->title }}
+                    </h2>
+                    <img src="{{ $record->poster }}" alt="{{ $record->title }}" class="poster"/>
+                </a>
             </div>
-            @empty
+        @empty
+            <p>記録はありません。</p>
         @endforelse
-        <div id="app"></div>
-        <script></script>
     </body>
 </html>
