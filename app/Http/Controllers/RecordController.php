@@ -29,7 +29,8 @@ class RecordController extends Controller
             'title' => 'required|max:255',
             'evaluation' => 'required|integer|min:1|max:10',
             'date_watched' => 'nullable|date',
-            'comment' => 'nullable|string'
+            'comment' => 'nullable|string',
+            'poster_path' => 'max:255'
         ]);
     
         // Recordモデルを使用してデータを保存
@@ -38,6 +39,7 @@ class RecordController extends Controller
         $record->evaluation = $validatedData['evaluation'];
         $record->date_watched = $validatedData['date_watched'];
         $record->comment = $validatedData['comment'];
+        $record->poster_path = $validatedData['poster_path'];
         $record->save();
     
         return redirect()->route('records.index')->with('success', '記録されました。');
@@ -71,7 +73,7 @@ class RecordController extends Controller
     
     public function create()
     {
-        return view('records.create', compact('record')); // 映画記録作成フォームのビューを表示
+        return view('records.create'); // 映画記録作成フォームのビューを表示
     }
     
     public function edit(Record $record)
@@ -82,12 +84,21 @@ class RecordController extends Controller
     
     public function update(Request $request, Record $record)
     {
+        // バリデーションルールを定義
         $validatedData = $request->validate([
-            // バリデーションルール
+            'title' => 'required|max:255',
+            'evaluation' => 'required|integer|min:1|max:10',
+            'date_watched' => 'nullable|date',
+            'comment' => 'nullable|string'
         ]);
     
-        $record->update($validatedData);
+        // fillメソッドを使って$recordにバリデーションを通過したデータを一括代入し、
+        // saveメソッドで変更を保存します。
+        $record->fill($validatedData)->save();
     
-        return redirect()->route('records.index')->with('success', '記録が更新されました。');
+        // 更新が完了したら、詳細ページにリダイレクトします。
+        // この場合、'records.show'ルートに該当するURLにリダイレクトすることになります。
+        // 成功メッセージと共にリダイレクトします。
+        return redirect()->route('records.show', $record->id)->with('success', '記録が更新されました。');
     }
 }

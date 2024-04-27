@@ -43,8 +43,8 @@
                     <h2 class="title">
                         {{ $record->title }}
                     </h2>
-                    <img src="{{ $record->poster }}" alt="{{ $record->title }}" class="poster"/>
                 </a>
+                <img src="{{ $record->poster_path }}" alt="{{ $record->title }}" class="poster"/>
             </div>
         @empty
             <p>記録はありません。</p>

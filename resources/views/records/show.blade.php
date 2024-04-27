@@ -39,9 +39,13 @@
         </h1>
         <div class="content">
             <div class="content_post">
-                <p class="body">{{ $record->body }}</p>
                 <p>評価: {{ $record->evaluation }}</p>
                 <p>視聴日: {{ date('Y-m-d' ,strtotime($record->date_watched)) }}</p>
+                @if($record->comment)
+                  <p class="comment">{{ $record->comment }}</p>
+                @else
+                  <p class="comment">No comment provided.</p>
+                @endif
             </div>
         </div>
         <a href="{{ route('records.edit', $record) }}" class="button edit-button">編集</a>

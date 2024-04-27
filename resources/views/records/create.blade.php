@@ -12,7 +12,7 @@
         @csrf
         <div>
             <label for="title-search">タイトル</label>
-            <input type="text" id="title-search" name="title" placeholder="タイトルを検索">
+            <input type="text" id="title-search" name="title" value="" placeholder="タイトルを検索">
         </div>
         <div id="poster-container"></div>
         <div>
@@ -28,6 +28,7 @@
             <textarea id="comment" name="comment"></textarea>
         </div>
         <input type="submit" value="記録">
+        <a href="{{ route('records.index') }}" class="back-button">映画一覧へ戻る</a>
     </form>
     <script>
         const searchInput = document.getElementById('title-search');
@@ -35,14 +36,14 @@
 
         searchInput.addEventListener('change', function() {
             const title = this.value;
-            fetch(`https:api.themoviedb.org/3/search/movie?api_key=b2303044ed7e9674b7ee57347a9f72c1&query=${title}`)
+            fetch(`https://api.themoviedb.org/3/search/movie?api_key=b2303044ed7e9674b7ee57347a9f72c1&query=${searchInput.value}`)
                 .then(response => response.json())
                 .then(data => {
                     const movie = data.results[0];
                     if (movie && movie.poster_path) {
-                        const posterImage = document.createElement('img');
-                        posterImage.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-                        posterContainer.innerHTML = ''; // Clear previous posters
+                        const posterImage = document.createElement('p');
+                        posterImage.src =`https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+                        posterContainer.innerHTML = `<input type="hidden" name="poster_path" value=${posterImage.src}>`; // Clear previous posters
                         posterContainer.appendChild(posterImage);
                     }
                 })

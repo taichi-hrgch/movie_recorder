@@ -22,29 +22,9 @@
         </div>
         <div>
             <label for="comment">コメント</label>
-            <input type="text" id="comment" name="comment" value="{{ $record->comment }}" required>
+            <textarea id="comment" name="comment" required>{{ $record->comment }}</textarea>
         </div>
         <input type="submit" value="更新">
     </form>
 </body>
-<script>
-        const searchInput = document.getElementById('title-search');
-        const posterContainer = document.getElementById('poster-container');
-
-        searchInput.addEventListener('change', function() {
-            const title = this.value;
-            fetch(`https:api.themoviedb.org/3/search/movie?api_key=b2303044ed7e9674b7ee57347a9f72c1&query=${title}`)
-                .then(response => response.json())
-                .then(data => {
-                    const movie = data.results[0];
-                    if (movie && movie.poster_path) {
-                        const posterImage = document.createElement('img');
-                        posterImage.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-                        posterContainer.innerHTML = ''; // Clear previous posters
-                        posterContainer.appendChild(posterImage);
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        });
-</script>
 </html>
