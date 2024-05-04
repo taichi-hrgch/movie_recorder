@@ -35,11 +35,14 @@ class RecordController extends Controller
     
         // Recordモデルを使用してデータを保存
         $record = new Record();
-        $record->title = $validatedData['title'];
-        $record->evaluation = $validatedData['evaluation'];
-        $record->date_watched = $validatedData['date_watched'];
-        $record->comment = $validatedData['comment'];
-        $record->poster_path = $validatedData['poster_path'];
+        $record->title = $request->title;
+        $record->poster_path = $request->poster_path;
+        $record->genre = $request->genre;
+        $record->release_date = $request->release_date;
+        $record->cast = $request->cast;
+        $record->evaluation = $request->evaluation;
+        $record->date_watched = $request->date_watched;
+        $record->comment = $request->comment;
         $record->save();
     
         return redirect()->route('records.index')->with('success', '記録されました。');
@@ -89,7 +92,8 @@ class RecordController extends Controller
             'title' => 'required|max:255',
             'evaluation' => 'required|integer|min:1|max:10',
             'date_watched' => 'nullable|date',
-            'comment' => 'nullable|string'
+            'comment' => 'nullable|string',
+            'poster_path' => 'max:255'
         ]);
     
         // fillメソッドを使って$recordにバリデーションを通過したデータを一括代入し、
@@ -101,4 +105,11 @@ class RecordController extends Controller
         // 成功メッセージと共にリダイレクトします。
         return redirect()->route('records.show', $record->id)->with('success', '記録が更新されました。');
     }
+    
+    public function destroy(Record $record)
+    {
+        $record->delete();
+        return redirect()->route('records.index')->with('success', '記録が削除されました。');
+    }
+
 }

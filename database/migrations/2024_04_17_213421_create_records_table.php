@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->text('comment')->nullable();
             $table->date('release_date')->nullable();
-            $table->json('genre')->nullable();
+            $table->text('genre')->nullable();
             $table->string('poster_path')->nullable();
             $table->json('recommendations')->nullable();
             $table->json('cast')->nullable();

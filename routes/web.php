@@ -20,3 +20,6 @@ Route::put('/records/{record}', [RecordController::class, 'update'])->name('reco
 
 // 特定の映画記録の詳細ページへのルート定義
 Route::get('/records/{record}', [RecordController::class, 'show'])->name('records.show');
+
+// 投稿を削除する
+Route::delete('/records/{record}', [RecordController::class, 'destroy'])->name('records.destroy');
