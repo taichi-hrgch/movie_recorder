@@ -98,12 +98,16 @@ class RecordController extends Controller
     
         // fillメソッドを使って$recordにバリデーションを通過したデータを一括代入し、
         // saveメソッドで変更を保存します。
-        $record->fill($validatedData)->save();
+        $record->title = $request->title;
+        $record->evaluation = $request->evaluation;
+        $record->date_watched = $request->date_watched;
+        $record->comment = $request->comment;
+        $record->save();
     
         // 更新が完了したら、詳細ページにリダイレクトします。
         // この場合、'records.show'ルートに該当するURLにリダイレクトすることになります。
         // 成功メッセージと共にリダイレクトします。
-        return redirect()->route('records.show', $record->id)->with('success', '記録が更新されました。');
+        return redirect('/records/'.$record->id);
     }
     
     public function destroy(Record $record)

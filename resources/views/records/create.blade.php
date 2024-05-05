@@ -30,7 +30,7 @@
                 border-radius: 5px;
                 box-shadow: 0 9px #999;
             }
-        .button:hover { background-color: #3e8e41; }
+        .button:hover { background-color: #a9a9a9; }
         .button:active {
             background-color: #3e8e41;
             box-shadow: 0 5px #666;
@@ -80,92 +80,94 @@
         }
     </style>
 </head>
-<body>
-    <h1>映画の記録を作成</h1>
-    <form action="{{ route('records.store') }}" method="POST">
-        @csrf
-        <div class="title-container">
-            <label for="title-search">タイトル</label>
-            <input type="text" id="title-search" name="title" value="" placeholder="タイトルを検索">
-            <button type="button" id="search-button" class="button">検索</button>
-        </div>
-        <div id="results-container" class="results-container"></div>
-        <div class="evaluation">
-            <label for="evaluation">評価 (1〜10)</label>
-            <input type="number" id="evaluation" name="evaluation" required min="1" max="10">
-        </div>
-        <div class="date_watched">
-            <label for="date-watched">視聴日</label>
-            <input type="date" id="date-watched" name="date_watched">
-        </div>
-        <div class="comment">
-            <label for="comment">コメント</label>
-            <textarea id="comment" name="comment"></textarea>
-        </div>
-        <div class="button-container">
-            <input type="submit" value="記録" class="button record-button">
-            <a href="{{ route('records.index') }}" class="button back-button" onclick="return confirm('まだ記録できていません．映画一覧に戻りますか？');">戻る</a>
-        </div>
-    </form>
-    <script>
-        const searchButton = document.getElementById('search-button');
-        const searchInput = document.getElementById('title-search');
-        const resultsContainer = document.getElementById('results-container');
-        
-        searchButton.addEventListener('click', function () {
-            const title = searchInput.value;
-            if (title) { // Ensure there is a title to search for
-                fetch(`https://api.themoviedb.org/3/search/movie?api_key=b2303044ed7e9674b7ee57347a9f72c1&language=ja-JP&query=${encodeURIComponent(title)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        resultsContainer.innerHTML = ''; // Clear previous results
-                        data.results.slice(0, 5).forEach(movie => {
-                            const movieElem = document.createElement('div');
-                            movieElem.classList.add('result-item');
-                            movieElem.innerHTML = `
-                                <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" class="poster">
-                                <p class="real-title">${movie.title}</p>
-                            `;
-                            movieElem.addEventListener('click', () => {
-                                searchInput.value = movie.title; // Update the search field with the selected movie title
-                                updateHiddenInputs(movie); // Update hidden inputs with selected movie data
+<x-app-layout>
+    <body>
+        <h1>映画の記録を作成</h1>
+        <form action="{{ route('records.store') }}" method="POST">
+            @csrf
+            <div class="title-container">
+                <label for="title-search">タイトル</label>
+                <input type="text" id="title-search" name="title" value="" placeholder="タイトルを検索">
+                <button type="button" id="search-button" class="button">検索</button>
+            </div>
+            <div id="results-container" class="results-container"></div>
+            <div class="evaluation">
+                <label for="evaluation">評価 (1〜10)</label>
+                <input type="number" id="evaluation" name="evaluation" required min="1" max="10">
+            </div>
+            <div class="date_watched">
+                <label for="date-watched">視聴日</label>
+                <input type="date" id="date-watched" name="date_watched">
+            </div>
+            <div class="comment">
+                <label for="comment">コメント</label>
+                <textarea id="comment" name="comment"></textarea>
+            </div>
+            <div class="button-container">
+                <input type="submit" value="記録" class="button record-button">
+                <a href="{{ route('records.index') }}" class="button back-button" onclick="return confirm('まだ記録できていません．映画一覧に戻りますか？');">戻る</a>
+            </div>
+        </form>
+        <script>
+            const searchButton = document.getElementById('search-button');
+            const searchInput = document.getElementById('title-search');
+            const resultsContainer = document.getElementById('results-container');
+            
+            searchButton.addEventListener('click', function () {
+                const title = searchInput.value;
+                if (title) { // Ensure there is a title to search for
+                    fetch(`https://api.themoviedb.org/3/search/movie?api_key=b2303044ed7e9674b7ee57347a9f72c1&language=ja-JP&query=${encodeURIComponent(title)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            resultsContainer.innerHTML = ''; // Clear previous results
+                            data.results.slice(0, 5).forEach(movie => {
+                                const movieElem = document.createElement('div');
+                                movieElem.classList.add('result-item');
+                                movieElem.innerHTML = `
+                                    <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" class="poster">
+                                    <p class="real-title">${movie.title}</p>
+                                `;
+                                movieElem.addEventListener('click', () => {
+                                    searchInput.value = movie.title; // Update the search field with the selected movie title
+                                    updateHiddenInputs(movie); // Update hidden inputs with selected movie data
+                                });
+                                resultsContainer.appendChild(movieElem);
                             });
-                            resultsContainer.appendChild(movieElem);
-                        });
-                    })
-                    .catch(error => console.error('Error:', error));
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
+            });
+            
+            function updateHiddenInputs(movie) {
+                // APIから追加情報を取得
+                fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=b2303044ed7e9674b7ee57347a9f72c1&language=ja-JP&append_to_response=credits`)
+                .then(response => response.json())
+                .then(data => {
+                    // 必要なデータを取得
+                    const genre = data.genres.map(genre => genre.name).join(', ');
+                    const releaseDate = data.release_date;
+                    const cast = data.credits.cast.slice(0, 5).map(actor => actor.name).join(', ');
+            
+                    // Hidden input でフォームに追加
+                    createHiddenInput('genre', genre);
+                    createHiddenInput('release_date', releaseDate);
+                    createHiddenInput('cast', cast);
+                })
+                .catch(error => console.error('Error fetching movie details:', error));
+            
+                // 既存のポスターパスの設定
+                createHiddenInput('poster_path', `https://image.tmdb.org/t/p/w500${movie.poster_path}`);
             }
-        });
-        
-        function updateHiddenInputs(movie) {
-            // APIから追加情報を取得
-            fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=b2303044ed7e9674b7ee57347a9f72c1&language=ja-JP&append_to_response=credits`)
-            .then(response => response.json())
-            .then(data => {
-                // 必要なデータを取得
-                const genre = data.genres.map(genre => genre.name).join(', ');
-                const releaseDate = data.release_date;
-                const cast = data.credits.cast.slice(0, 5).map(actor => actor.name).join(', ');
-        
-                // Hidden input でフォームに追加
-                createHiddenInput('genre', genre);
-                createHiddenInput('release_date', releaseDate);
-                createHiddenInput('cast', cast);
-            })
-            .catch(error => console.error('Error fetching movie details:', error));
-        
-            // 既存のポスターパスの設定
-            createHiddenInput('poster_path', `https://image.tmdb.org/t/p/w500${movie.poster_path}`);
-        }
-        
-        function createHiddenInput(name, value) {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = name;
-            input.value = value;
-            input.classList.add('hidden-input');
-            document.querySelector('form').appendChild(input);
-        }
-    </script>
-</body>
+            
+            function createHiddenInput(name, value) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = name;
+                input.value = value;
+                input.classList.add('hidden-input');
+                document.querySelector('form').appendChild(input);
+            }
+        </script>
+    </body>
+</x-app-layout>
 </html>

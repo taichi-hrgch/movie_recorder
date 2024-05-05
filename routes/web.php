@@ -1,25 +1,33 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecordController;
+use Illuminate\Support\Facades\Route;
 
-// 映画記録の一覧ページへのルート定義
-Route::get('/records', [RecordController::class, 'index'])->name('records.index');
+Route::get('/', [RecordController::class, 'index'])->name('index');
 
-// 記録するページへのルート定義
-Route::get('/records/create', [RecordController::class, 'create'])->name('records.create');
+// ダッシュボードページ（認証とEメール検証が必要）
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-// 新しい記録を保存するためのルート定義
-Route::post('/records', [RecordController::class, 'store'])->name('records.store');
+// プロファイル関連のルーティング（認証が必要）
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-// 映画記録の編集フォームへのルート
-Route::get('/records/{record}/edit', [RecordController::class, 'edit'])->name('records.edit');
+// 映画記録管理のルーティング
+Route::middleware('auth')->group(function () {
+    Route::get('/records', [RecordController::class, 'index'])->name('records.index');
+    Route::get('/records/create', [RecordController::class, 'create'])->name('records.create');
+    Route::post('/records', [RecordController::class, 'store'])->name('records.store');
+    Route::get('/records/{record}/edit', [RecordController::class, 'edit'])->name('records.edit');
+    Route::put('/records/{record}', [RecordController::class, 'update'])->name('records.update');
+    Route::get('/records/{record}', [RecordController::class, 'show'])->name('records.show');
+    Route::delete('/records/{record}', [RecordController::class, 'destroy'])->name('records.destroy');
+});
 
-// 編集した記録を更新
-Route::put('/records/{record}', [RecordController::class, 'update'])->name('records.update');
-
-// 特定の映画記録の詳細ページへのルート定義
-Route::get('/records/{record}', [RecordController::class, 'show'])->name('records.show');
-
-// 投稿を削除する
-Route::delete('/records/{record}', [RecordController::class, 'destroy'])->name('records.destroy');
+// 認証ルート
+require __DIR__.'/auth.php';
