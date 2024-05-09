@@ -7,9 +7,15 @@
     <style>
         body { font-family: 'Nunito', sans-serif; }
         .header {
-            font-size: 30px;
+            top: 100px;
+            font-size: 28px;
+            font-weight: bold;
             text-align: center;
-        }
+            /*background-color: white;  背景色 */
+            color: black; /* テキストカラー */
+            padding: 20px; /* 上下左右のパディング */
+            /*margin-bottom: 10px;  下のマージン */
+            }
         .poster {
                 width: 200px;
                 height: auto;

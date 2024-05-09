@@ -31,3 +31,7 @@ Route::middleware('auth')->group(function () {
 
 // 認証ルート
 require __DIR__.'/auth.php';
+
+// // ソート機能
+//  Route::get('/records', [RecordController::class, 'sort'])->name('records.sort');
+

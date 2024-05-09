@@ -11,16 +11,49 @@ class RecordController extends Controller
     /**
      * 映画記録の一覧を表示するメソッド
      */
-    public function index()
-    {
-        $records = Record::all(); // 全ての映画記録を取得
-        return view('records.index', compact('records')); // 一覧ビューにデータを渡す
-    }
+    // public function index()
+    // {
+    //     $records = Record::all(); // 全ての映画記録を取得
+    //     return view('records.index', compact('records')); // 一覧ビューにデータを渡す
+    // }
     
     public function show(Record $record)
     {
         // ルートモデルバインディングにより、Recordのインスタンスが自動的に注入される
         return view('records.show', compact('record'));
+    }
+    
+    public function index(Request $request)
+    {
+        $sortKey = $request->query('sort_by');
+        $query = Record::query();
+    
+        switch ($sortKey) {
+            case 'title_asc':
+                $query->orderBy('title');
+                break;
+            case 'title_desc':
+                $query->orderByDesc('title');
+                break;
+            case 'release_date_asc':
+                $query->orderBy('release_date');
+                break;
+            case 'release_date_desc':
+                $query->orderByDesc('release_date');
+                break;
+            case 'watch_date_asc':
+                $query->orderBy('date_watched');
+                break;
+            case 'watch_date_desc':
+                $query->orderByDesc('date_watched');
+                break;
+            default:
+                $query->orderByDesc('date_watched');
+                break;
+        }
+    
+        $records = $query->get();
+        return view('records.index', compact('records'));
     }
     
     public function store(Request $request)
@@ -115,5 +148,7 @@ class RecordController extends Controller
         $record->delete();
         return redirect()->route('records.index')->with('success', '記録が削除されました。');
     }
+    
+    
 
 }

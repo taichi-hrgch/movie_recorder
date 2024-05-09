@@ -8,8 +8,15 @@
         <!-- Styles -->
         <style>
             body { font-family: 'Nunito', sans-serif; }
-            .title {
-                font-size:30px;
+            .header {
+                top: 100px;
+                font-size: 28px;
+                font-weight: bold;
+                text-align: center;
+                /*background-color: white;  背景色 */
+                color: black; /* テキストカラー */
+                padding: 20px; /* 上下左右のパディング */
+                /*margin-bottom: 10px;  下のマージン */
             }
             .container {
                 display: flex;
@@ -78,7 +85,7 @@
         <x-app-layout>
             <body>
                 <div class="container">
-                    <h1 class="title">
+                    <h1 class="header">
                         {{ $record->title }}
                     </h1>
                     <div class="details-container">

@@ -13,9 +13,15 @@
             padding: 0;
         }
         .header {
-            font-size: 30px;
+            top: 100px;
+            font-size: 28px;
+            font-weight: bold;
             text-align: center;
-        }
+            /*background-color: white;  背景色 */
+            color: black; /* テキストカラー */
+            padding: 20px; /* 上下左右のパディング */
+            /*margin-bottom: 10px;  下のマージン */
+            }
         .button-container {
             display: flex;
             justify-content: center;
@@ -168,8 +174,8 @@
                                 const movieElem = document.createElement('div');
                                 movieElem.classList.add('result-item');
                                 movieElem.innerHTML = `
-                                    <p class="real-title">${movie.title}</p>
                                     <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" class="poster">
+                                    <p class="real-title">${movie.title}</p>
                                 `;
                                 movieElem.addEventListener('click', () => {
                                     searchInput.value = movie.title; // Update the search field with the selected movie title

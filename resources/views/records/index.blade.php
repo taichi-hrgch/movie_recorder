@@ -17,6 +17,7 @@
         <style>
             body { font-family: 'Nunito', sans-serif; }
             .header {
+                top: 100px;
                 font-size: 28px;
                 font-weight: bold;
                 text-align: center;
@@ -29,13 +30,24 @@
             .title { font-size: 20px; }
             .create-record-button {
                 position: absolute;
-                top: 90px;
-                right: 20px;
+                top: 100px;
+                left: 250px;
                 padding: 10px;
                 background-color: #007bff;
                 color: white;
                 text-decoration: none;
                 border-radius: 5px;
+            }
+            .sort {
+                position: absolute;
+                top: 100px;
+                left: 60px;
+                padding: 10px;
+                background-color: white;
+                color: black;
+                text-decoration: none;
+                border-radius: 5px;
+                width: 150px;
             }
             .records-container {
                 display: flex;
@@ -62,6 +74,19 @@
     </head>
     <x-app-layout>
         <body>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <form action="{{ route('records.index') }}" method="GET">
+                    <select class="sort" name="sort_by" onchange="this.form.submit()">
+                        <option value="">並び替え</option>
+                        <option value="title_asc" {{ request('sort_by') == 'title_asc' ? 'selected' : '' }}>タイトル昇順</option>
+                        <option value="title_desc" {{ request('sort_by') == 'title_desc' ? 'selected' : '' }}>タイトル降順</option>
+                        <option value="release_date_asc" {{ request('sort_by') == 'release_date_asc' ? 'selected' : '' }}>リリース日昇順</option>
+                        <option value="release_date_desc" {{ request('sort_by') == 'release_date_desc' ? 'selected' : '' }}>リリース日降順</option>
+                        <option value="watch_date_asc" {{ request('sort_by') == 'watch_date_asc' ? 'selected' : '' }}>視聴日昇順</option>
+                        <option value="watch_date_desc" {{ request('sort_by') == 'watch_date_desc' ? 'selected' : '' }}>視聴日降順</option>
+                    </select>
+                </form>
+            </div>
             <h1 class="header">映画一覧</h1>
             <div>
                 <a href="{{ route('records.create') }}" class="create-record-button">記録を追加</a>
