@@ -6,13 +6,19 @@
     <meta charset="utf-8">
     <title>映画記録作成</title>
     <style>
-        .real-title {
-            font-size: 20px;
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
         }
-        
+        .header {
+            font-size: 30px;
+            text-align: center;
+        }
         .button-container {
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
             margin-bottom: 20px;
         }
         .button {
@@ -32,21 +38,19 @@
             }
         .button:hover { background-color: #a9a9a9; }
         .button:active {
-            background-color: #3e8e41;
+            background-color: #696969;
             box-shadow: 0 5px #666;
             transform: translateY(4px);
         }
+        .search-button {writing-mode: horizontal-tb;
+                        min-width : 100px;
+        }
         .record-button{ background-color: #4CAF50; } 
         .back-button { background-color: #008CBA; } 
-        .button-container {
-            display: flex; /* Flexboxを使用し、要素を水平に配置 */
-            justify-content: flex-start; /* ボタンを左端から始める */
-            margin-bottom: 20px; /* ボタンの下にマージンを設定 */
-        }
         .results-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: flex-start;
+            justify-content: center;
             margin-top: 10px;
         }
         .result-item {
@@ -66,42 +70,82 @@
                 height: auto;
                 margin-bottom: 10px; /* タイトルとの間隔 */
         }
+        .search-row {
+            display: inline-flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 700px;
+            max-width: 100%; /* 入力フィールドの最大幅と合わせる */
+        }
         .title-container{
-            font-size: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
         }
         .evaluation{
-            font-size: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
         }
         .date_watched{
-            font-size: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
         }
         .comment{
-            font-size: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+        .input-field {
+            width: 700px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            max-width: 100%;
+            margin-right: 10px; /* ボタンとの間に隙間を設ける */
+            writing-mode: horizontal-tb;
+        }
+        .form-label {
+            flex-basis: 10px; /* ラベルの基本幅 */
+            font-size: 18px;
+            font-weight: bold;
         }
     </style>
 </head>
 <x-app-layout>
     <body>
-        <h1>映画の記録を作成</h1>
+        <h1 class="header">映画の記録を作成</h1>
         <form action="{{ route('records.store') }}" method="POST">
             @csrf
             <div class="title-container">
-                <label for="title-search">タイトル</label>
-                <input type="text" id="title-search" name="title" value="" placeholder="タイトルを検索">
-                <button type="button" id="search-button" class="button">検索</button>
+                <label class="form-label" for="title-search">タイトル</label>
+                <div class="search-row">
+                    <input class="input-field" type="text" id="title-search" name="title" value="" placeholder="タイトルを検索">
+                    <button type="button" id="search-button" class="button search-button">検索</button>
+                </div>
             </div>
             <div id="results-container" class="results-container"></div>
             <div class="evaluation">
-                <label for="evaluation">評価 (1〜10)</label>
-                <input type="number" id="evaluation" name="evaluation" required min="1" max="10">
+                <label class="form-label" for="evaluation">評価 (1〜10)</label>
+                <input class="input-field" type="number" id="evaluation" name="evaluation" required min="1" max="10">
             </div>
             <div class="date_watched">
-                <label for="date-watched">視聴日</label>
-                <input type="date" id="date-watched" name="date_watched">
+                <label class="form-label" for="date-watched">視聴日</label>
+                <input class="input-field" type="date" id="date-watched" name="date_watched">
             </div>
             <div class="comment">
-                <label for="comment">コメント</label>
-                <textarea id="comment" name="comment"></textarea>
+                <label class="form-label" for="comment">コメント</label>
+                <textarea class="input-field" id="comment" name="comment"></textarea>
             </div>
             <div class="button-container">
                 <input type="submit" value="記録" class="button record-button">
@@ -124,8 +168,8 @@
                                 const movieElem = document.createElement('div');
                                 movieElem.classList.add('result-item');
                                 movieElem.innerHTML = `
-                                    <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" class="poster">
                                     <p class="real-title">${movie.title}</p>
+                                    <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" class="poster">
                                 `;
                                 movieElem.addEventListener('click', () => {
                                     searchInput.value = movie.title; // Update the search field with the selected movie title

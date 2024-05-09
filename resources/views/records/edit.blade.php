@@ -6,10 +6,14 @@
     <title>映画記録編集</title>
     <style>
         body { font-family: 'Nunito', sans-serif; }
+        .header {
+            font-size: 30px;
+            text-align: center;
+        }
         .poster {
                 width: 200px;
                 height: auto;
-                margin-right: 20px;
+                margin: 0 auto; /* 中央揃えに */
             }
         .button {
                 display: inline-block;
@@ -28,7 +32,7 @@
         }
         .button:hover { background-color: #a9a9a9; }
         .button:active {
-            background-color: #3e8e41;
+            background-color: #696969;
             box-shadow: 0 5px #666;
             transform: translateY(4px);
         }
@@ -36,43 +40,78 @@
         .back-button { background-color: #008CBA; } 
         .button-container {
             display: flex; /* Flexboxを使用し、要素を水平に配置 */
-            justify-content: flex-start; /* ボタンを左端から始める */
+            justify-content: center; /* ボタンを左端から始める */
             margin-bottom: 20px; /* ボタンの下にマージンを設定 */
         }
         .title{
-            font-size: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
         }
         .evaluation{
-            font-size: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+         .date_watched{
+            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
         }
         .comment{
-            font-size: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
         }
+        .form-label {
+            flex-basis: 10px; /* ラベルの基本幅 */
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .input-field {
+            width: 700px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            max-width: 100%;
+            margin-right: 10px; /* ボタンとの間に隙間を設ける */
+            writing-mode: horizontal-tb;
+        }
+        .form-label {
     </style>
 </head>
 <x-app-layout>
     <body>
-        <h1>映画の記録を編集</h1>
+        <h1 class="header">映画の記録を編集</h1>
         <form action="{{ route('records.update', $record) }}" method="POST">
             @csrf
             @method('PUT') <!-- HTMLフォームがPUTメソッドを直接サポートしていないために必要 -->
             <img src="{{ $record->poster_path ? 'https://image.tmdb.org/t/p/w500' . $record->poster_path : 'default_poster.jpg' }}" alt="{{ $record->title }}" class="poster">
             <div class="title">
-                <label for="title">タイトル</label>
-                <input type="text" id="title" name="title" value="{{ $record->title }}" required>
+                <label class="form-label" for="title">タイトル</label>
+                <input class="input-field" type="text" id="title" name="title" value="{{ $record->title }}" required readonly>
             </div>
             <!-- 他のフィールドも同様に、現在の値をvalue属性に設定 -->
             <div class="evaluation">
-                <label for="evaluation">評価 (1〜10)</label>
-                <input type="number" id="evaluation" name="evaluation" value="{{ $record->evaluation }}" required>
+                <label class="form-label" for="evaluation">評価 (1〜10)</label>
+                <input class="input-field" type="number" id="evaluation" name="evaluation" value="{{ $record->evaluation }}" required>
             </div>
             <div class="date_watched">
-                <label for="date-watched">視聴日</label>
-                <input type="date" id="date-watched" name="date_watched" value="{{ $record->date_watched }}" required>
+                <label class="form-label" for="date-watched">視聴日</label>
+                <input class="input-field" type="date" id="date-watched" name="date_watched" value="{{ $record->date_watched }}" required>
             </div>
             <div class="comment">
-                <label for="comment">コメント</label>
-                <textarea id="comment" name="comment">{{ $record->comment }}</textarea>
+                <label class="form-label" for="comment">コメント</label>
+                <textarea class="input-field" id="comment" name="comment">{{ $record->comment }}</textarea>
             </div>
             <div class="button-container">
                 <input type="submit" value="更新" class="button update-button">

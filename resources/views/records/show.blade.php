@@ -13,10 +13,13 @@
             }
             .container {
                 display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
                 flex-direction: column;
+                align-items: center;
+                height: auto; /* 高さを自動に設定 */
+                margin-top: 20px; /* 上部に100pxのマージンを設定 */
+                padding: 10px; /* 必要に応じて内側のパディングを設定 */
+                box-sizing: border-box;
+                font-size:18px;
             }
             .details-container {
                 display: flex;
@@ -54,7 +57,7 @@
                 background-color:#a9a9a9;
             }
             .button:active, .delete-button:active {
-                background-color: #3e8e41;
+                background-color: #696969;
                 box-shadow: 0 5px #666;
                 transform: translateY(4px);
             }
