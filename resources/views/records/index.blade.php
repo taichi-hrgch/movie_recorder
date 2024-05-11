@@ -7,7 +7,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <!-- Styles -->
         <style>
-            body { font-family: 'Nunito', sans-serif; }
+            body { font-family: 'Nunito', sans-serif;}
             .header {
                 top: 100px;
                 font-size: 28px;

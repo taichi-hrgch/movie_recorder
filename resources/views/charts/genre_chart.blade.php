@@ -26,7 +26,7 @@
     .container {
       display: flex;
       justify-content: center;
-      align-items: start;
+      align-items: stretch;
       gap: 50px; /* Add space between the elements */
       padding: 20px;
     }
@@ -50,6 +50,16 @@
       font-size: 20px; /* Increase the font size for readability */
       text-align: center; /* Center the text */
     }
+    .fig-container {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+    .image {
+      width: 300px;
+      margin-top:50px;
+    }
   </style>
 </head>
 <x-app-layout>
@@ -57,14 +67,17 @@
   <h1 class="header">映画ジャンルと視聴統計</h1>
   <div class="container">
     <div class="chart-container">
-      <h2 class="h2">ジャンル別映画割合</h2>
+      <h2 class="h2">ジャンル別映画割合(%)</h2>
       <canvas id="genreChart"></canvas>
     </div>
-    <div class="stats-container">
-      <h2 class="h2">映画視聴統計</h2>
-      <p>合計視聴数: {{ $totalMovies }}</p>
-      <p>「今月」の視聴数: {{ $moviesThisMonth }}</p>
-      <p>「今年」の視聴数: {{ $moviesThisYear }}</p>
+    <div class="fig-container">
+      <div class="stats-container">
+        <h2 class="h2">映画視聴統計(本)</h2>
+        <p>合計視聴数：{{ $totalMovies }}</p>
+        <p>「今月」の視聴数：{{ $moviesThisMonth }}</p>
+        <p>「今年」の視聴数：{{ $moviesThisYear }}</p>
+      </div>
+      <img src="fig/home-theater.svg" alt="home-theater" class="image">
     </div>
   </div>
     <script>

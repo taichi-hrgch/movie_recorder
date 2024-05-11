@@ -71,6 +71,10 @@
             .edit-button { background-color: #4CAF50; } /* Green */
             .back-button { background-color: #008CBA; } /* Blue */
             .delete-button { background-color: #f44336; } /* Red */
+            .image {
+                width:200px;
+                height:auto;
+            }
         </style>
         <script>
             function deletePost(id) {
@@ -91,11 +95,11 @@
                     <div class="details-container">
                         <img src="{{ $record->poster_path ? 'https://image.tmdb.org/t/p/w500' . $record->poster_path : 'default_poster.jpg' }}" alt="{{ $record->title }}" class="poster">
                         <div class="info">
-                            <p>ジャンル： {{ $record->genre }}</p>
-                            <p>キャスト： {{ $record->cast  }}</p>
-                            <p>リリース日： {{ $record->release_date }}</p>
-                            <p>あなたの評価： {{ $record->evaluation }}</p>
-                            <p>視聴日： {{ date('Y-m-d' ,strtotime($record->date_watched)) }}</p>
+                            <p>ジャンル：{{ $record->genre }}</p>
+                            <p>キャスト：{{ $record->cast  }}</p>
+                            <p>リリース日：{{ $record->release_date }}</p>
+                            <p>あなたの評価：{{ $record->evaluation }}</p>
+                            <p>視聴日：{{ date('Y-m-d' ,strtotime($record->date_watched)) }}</p>
                             @if($record->comment)
                               <p class="comment">コメント：{{ $record->comment }}</p>
                             @else
