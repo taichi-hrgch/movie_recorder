@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecordController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GenreChartController;
 
 Route::get('/', [RecordController::class, 'index'])->name('index');
 
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
 // 認証ルート
 require __DIR__.'/auth.php';
 
-// // ソート機能
-//  Route::get('/records', [RecordController::class, 'sort'])->name('records.sort');
+// チャート
+Route::get('/genre-chart', [GenreChartController::class, 'getGenreData'])->name('genre.chart');
 
+Route::get('/genre-chart', [GenreChartController::class, 'getSumData'])->name('genre.chart');

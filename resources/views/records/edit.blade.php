@@ -20,6 +20,7 @@
                 width: 200px;
                 height: auto;
                 margin: 0 auto; /* 中央揃えに */
+                padding-bottom:10px;
             }
         .button {
                 display: inline-block;
@@ -92,7 +93,10 @@
             margin-right: 10px; /* ボタンとの間に隙間を設ける */
             writing-mode: horizontal-tb;
         }
-        .form-label {
+        form {
+            padding-bottom: 20px;  /* 上下左右のパディングを増やす */
+            
+        }
     </style>
 </head>
 <x-app-layout>

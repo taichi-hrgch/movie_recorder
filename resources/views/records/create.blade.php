@@ -147,7 +147,7 @@
             </div>
             <div class="date_watched">
                 <label class="form-label" for="date-watched">視聴日</label>
-                <input class="input-field" type="date" id="date-watched" name="date_watched">
+                <input class="input-field" type="date" id="date-watched" name="date_watched" required>
             </div>
             <div class="comment">
                 <label class="form-label" for="comment">コメント</label>
@@ -202,11 +202,12 @@
                     createHiddenInput('genre', genre);
                     createHiddenInput('release_date', releaseDate);
                     createHiddenInput('cast', cast);
+                    createHiddenInput('poster_path', `https://image.tmdb.org/t/p/w500${movie.poster_path}`);
                 })
                 .catch(error => console.error('Error fetching movie details:', error));
             
                 // 既存のポスターパスの設定
-                createHiddenInput('poster_path', `https://image.tmdb.org/t/p/w500${movie.poster_path}`);
+                
             }
             
             function createHiddenInput(name, value) {

@@ -6,14 +6,6 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <!-- Styles -->
-        <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <title>映画一覧</title>
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <!-- Styles -->
         <style>
             body { font-family: 'Nunito', sans-serif; }
             .header {
@@ -31,7 +23,7 @@
             .create-record-button {
                 position: absolute;
                 top: 100px;
-                left: 250px;
+                right: 60px;
                 padding: 10px;
                 background-color: #007bff;
                 color: white;
@@ -54,8 +46,10 @@
                 flex-wrap: wrap;
                 justify-content:center;
                 padding: 20px;
+                gap:20px
             }
             .record {
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
                 flex: 0 0 250px;
                 margin-bottom: 20px;
                 text-align: center;
@@ -63,6 +57,7 @@
                 padding: 10px;
                 display: flex;
                 flex-direction: column;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
                 align-items: center; /* 横方向の中央揃え */
             }
             .poster {

@@ -16,7 +16,10 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
-                    {{ __('Index') }}
+                    {{ __('映画一覧') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('genre.chart')" :active="request()->routeIs('genre.chart')">
+                    {{ __('統計') }}
                     </x-nav-link>
                 </div>
             </div>
