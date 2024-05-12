@@ -151,8 +151,12 @@
             </div>
             <div class="comment">
                 <label class="form-label" for="comment">コメント</label>
-                <textarea class="input-field" id="comment" name="comment"></textarea>
+                <textarea class="input-field" id="comment" name="comment" placeholder="コメントは任意"></textarea>
             </div>
+            <input class="input-field" type="hidden" id="image-search" name="poster_path" value="">
+            <input class="input-field" type="hidden" id="genre-search" name="genre" value="">
+            <input class="input-field" type="hidden" id="cast-search" name="cast" value="">
+            <input class="input-field" type="hidden" id="release-search" name="release_date" value="">
             <div class="button-container">
                 <input type="submit" value="記録" class="button record-button">
                 <a href="{{ route('records.index') }}" class="button back-button" onclick="return confirm('まだ記録できていません．映画一覧に戻りますか？');">戻る</a>
@@ -161,6 +165,10 @@
         <script>
             const searchButton = document.getElementById('search-button');
             const searchInput = document.getElementById('title-search');
+            const imageInput = document.getElementById('image-search');
+            const genreInput = document.getElementById('genre-search');
+            const castInput = document.getElementById('cast-search');
+            const releaseInput = document.getElementById('release-search');
             const resultsContainer = document.getElementById('results-container');
             
             searchButton.addEventListener('click', function () {
@@ -179,7 +187,11 @@
                                 `;
                                 movieElem.addEventListener('click', () => {
                                     searchInput.value = movie.title; // Update the search field with the selected movie title
-                                    updateHiddenInputs(movie); // Update hidden inputs with selected movie data
+                                    imageInput.value = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+                                    //genreInput.value = movie.genres.map(genre => genre.name).join(', ');
+                                    //castInput.value = movie.credits.cast.slice(0, 5).map(actor => actor.name).join(', ');
+                                    //releaseInput.value = movie.release_dates;
+                                    updateHiddenInputs(movie);
                                 });
                                 resultsContainer.appendChild(movieElem);
                             });
@@ -194,20 +206,11 @@
                 .then(response => response.json())
                 .then(data => {
                     // 必要なデータを取得
-                    const genre = data.genres.map(genre => genre.name).join(', ');
-                    const releaseDate = data.release_date;
-                    const cast = data.credits.cast.slice(0, 5).map(actor => actor.name).join(', ');
-            
-                    // Hidden input でフォームに追加
-                    createHiddenInput('genre', genre);
-                    createHiddenInput('release_date', releaseDate);
-                    createHiddenInput('cast', cast);
-                    createHiddenInput('poster_path', `https://image.tmdb.org/t/p/w500${movie.poster_path}`);
+                    genreInput.value = data.genres.map(genre => genre.name).join(', ');
+                    castInput.value = data.credits.cast.slice(0, 5).map(actor => actor.name).join(', ');
+                    releaseInput.value = data.release_date;
                 })
                 .catch(error => console.error('Error fetching movie details:', error));
-            
-                // 既存のポスターパスの設定
-                
             }
             
             function createHiddenInput(name, value) {
