@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
 <body>
     <h1>映画の本棚</h1>
+    <p>【アプリURL】https://movierecorder-b29889e3d233.herokuapp.com/login</p>
     <p>【テストアカウント】<br>Mail: guestuser@mail.com<br>Password: guestuser2024</p>
     <a href="https://movierecorder-b29889e3d233.herokuapp.com/login" target="_blank" rel="noopener noreferrer" class="button-link">アプリはこちらから</a>
     <div class="section">
