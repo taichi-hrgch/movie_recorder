@@ -23,10 +23,12 @@
                 flex-direction: column;
                 align-items: center;
                 height: auto; /* 高さを自動に設定 */
+                margin: 0 auto;
                 margin-top: 20px; /* 上部に100pxのマージンを設定 */
                 padding: 10px; /* 必要に応じて内側のパディングを設定 */
                 box-sizing: border-box;
                 font-size:18px;
+                
             }
             .details-container {
                 display: flex;

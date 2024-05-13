@@ -29,6 +29,7 @@
       align-items: stretch;
       gap: 50px; /* Add space between the elements */
       padding: 20px;
+      margin: 0 auto;
     }
     .chart-container, .stats-container {
       border: 1px solid #ccc;
