@@ -88,16 +88,18 @@
             </div>
             <div class="records-container">
                 @forelse ($records as $record)
-                    <div class="record">
-                        <a href="{{ route('records.show', $record) }}">
-                            <img src="{{ $record->poster_path }}" alt="{{ $record->title }}" class="poster"/>
-                        </a>
-                        <a href="{{ route('records.show', $record) }}">
-                            <h2 class="title">
-                                {{ $record->title }}
-                            </h2>
-                        </a>
-                    </div>
+                    @if($record->user_id == auth()->id())
+                        <div class="record">
+                            <a href="{{ route('records.show', $record) }}">
+                                <img src="{{ $record->poster_path }}" alt="{{ $record->title }}" class="poster"/>
+                            </a>
+                            <a href="{{ route('records.show', $record) }}">
+                                <h2 class="title">
+                                    {{ $record->title }}
+                                </h2>
+                            </a>
+                        </div>
+                    @endif
                 @empty
                     <p>記録はありません。</p>
                 @endforelse

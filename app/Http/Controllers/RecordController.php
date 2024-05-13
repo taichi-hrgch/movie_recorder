@@ -65,9 +65,12 @@ class RecordController extends Controller
             'comment' => 'nullable|string',
             'poster_path' => 'max:255'
         ]);
+        
+        $userId = auth()->id();
     
         // Recordモデルを使用してデータを保存
         $record = new Record();
+        $record->user_id = $userId;
         $record->title = $request->title;
         $record->poster_path = $request->poster_path;
         $record->genre = $request->genre;
