@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Record;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class GenreChartController extends Controller
 {
     public function getGenreData()
     {
-        $genres = Record::pluck('genre')->toArray();
+        $userId = Auth::id();
+
+        $genres = Record::where('user_id', $userId)->pluck('genre')->toArray();
         $genreList = array_map(function($item) {
             return array_map('trim', explode(',', strtolower($item))); // 小文字化とトリムを実行
         }, $genres);
@@ -39,16 +42,20 @@ class GenreChartController extends Controller
     
     public function getSumData()
     {
+        $userId = Auth::id();
+
         // Count the total number of movies based on the date_watched field
-        $totalMovies = Record::whereNotNull('date_watched')->count();
+        $totalMovies = Record::where('user_id', $userId)->whereNotNull('date_watched')->count();
     
         // Count the number of movies watched this month based on the date_watched field
-        $moviesThisMonth = Record::whereMonth('date_watched', date('m'))
+        $moviesThisMonth = Record::where('user_id', $userId)
+                                 ->whereMonth('date_watched', date('m'))
                                  ->whereYear('date_watched', date('Y'))
                                  ->count();
     
         // Count the number of movies watched this year based on the date_watched field
-        $moviesThisYear = Record::whereYear('date_watched', date('Y'))
+        $moviesThisYear = Record::where('user_id', $userId)
+                                ->whereYear('date_watched', date('Y'))
                                 ->count();
     
         // Retrieve genre data
@@ -62,7 +69,7 @@ class GenreChartController extends Controller
             'moviesThisMonth' => $moviesThisMonth,
             'moviesThisYear' => $moviesThisYear
         ]);
-}
+    }
 
 
 
