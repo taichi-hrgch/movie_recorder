@@ -2,38 +2,15 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>映画の本棚</title>
-    <style>
-        body { font-family: Arial, sans-serif; background: #f4f4f9; color: #333; }
-        .section { margin-top: 20px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        h1, h2 { color: #2a507f; }
-        p, li { line-height: 1.6; }
-        a.button-link {
-            display: inline-block;
-            padding: 10px 20px;
-            margin-top: 10px;
-            background-color: #007BFF;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            text-align: center;
-        }
-        a.button-link:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
 <body>
     <h1>映画の本棚</h1>
     <p>【テストアカウント】<br>Mail: guestuser@mail.com<br>Password: guestuser2024</p>
     <a href="https://movierecorder-b29889e3d233.herokuapp.com/login" target="_blank" rel="noopener noreferrer" class="button-link">アプリはこちらから</a>
-
     <div class="section">
         <h2>アプリ概要</h2>
         <p>このアプリはあなたが視聴した映画を記録するためのものです。記録を追加するには「記録を追加」ボタンから操作します。タイトルを検索すると、関連する候補が表示されます。その中から、探していた映画を選んでください。</p>
         <p>記録された映画は「映画一覧」に表示され、クリックすると詳細情報が閲覧できます。また、「統計」セクションでは、記録した映画に基づいた統計情報を参照できます。</p>
     </div>
-
     <div class="section">
         <h2>制作背景</h2>
         <p>以下の理由からこのアプリケーションを制作しました。</p>
@@ -43,7 +20,6 @@
         </ul>
         <p>このアプリケーションは、過去に視聴した映画を振り返ることで当時を思い出したり、自分の映画の嗜好を把握し新たなジャンルを探求する手助けをすることを目的としています。</p>
     </div>
-
     <div class="section">
         <h2>機能一覧</h2>
         <ul>
@@ -58,7 +34,6 @@
             <li>統計：ジャンル別割合、視聴本数を表示します。</li>
         </ul>
     </div>
-
     <div class="section">
         <h2>開発環境</h2>
         <ul>
@@ -68,7 +43,6 @@
             <li>その他ツール：TMDB API</li>
         </ul>
     </div>
-
     <div class="section">
         <h2>工夫点</h2>
         <ul>
