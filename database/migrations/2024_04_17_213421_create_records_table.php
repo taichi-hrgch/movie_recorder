@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->integer('evaluation');
             $table->date('date_watched');
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->text('comment')->nullable();
             $table->date('release_date')->nullable();
             $table->text('genre')->nullable();
