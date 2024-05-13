@@ -6,7 +6,6 @@
     <h1>映画の本棚</h1>
     <p>【アプリURL】https://movierecorder-b29889e3d233.herokuapp.com/login</p>
     <p>【テストアカウント】<br>Mail: guestuser@mail.com<br>Password: guestuser2024</p>
-    <a href="https://movierecorder-b29889e3d233.herokuapp.com/login" target="_blank" rel="noopener noreferrer" class="button-link">アプリはこちらから</a>
     <div class="section">
         <h2>アプリ概要</h2>
         <p>このアプリはあなたが視聴した映画を記録するためのものです。記録を追加するには「記録を追加」ボタンから操作します。タイトルを検索すると、関連する候補が表示されます。その中から、探していた映画を選んでください。</p>
