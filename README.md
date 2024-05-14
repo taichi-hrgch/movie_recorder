@@ -38,7 +38,7 @@
         <h2>開発環境</h2>
         <ul>
             <li>言語：PHP, HTML, CSS, JavaScript</li>
-            <li>環境：Laravel(ver.8), AWS(EC2, Cloud9), MySQL(MariaDB), Github</li>
+            <li>環境：Laravel(ver.9), AWS(EC2, Cloud9), MySQL(MariaDB), Github</li>
             <li>デプロイ：Heroku</li>
             <li>その他ツール：TMDB API</li>
         </ul>
